@@ -8,30 +8,6 @@
 import Foundation
 import Algorithms
 
-class BufferedIO: IntcodeInput, IntcodeOutput, CustomStringConvertible {
-    var stream: [Int]
-
-    init() {
-        self.stream = []
-    }
-
-    func write(_ int: Int) {
-        stream.append(int)
-    }
-
-    func read() -> Int? {
-        if stream.count > 0 {
-            return stream.removeFirst()
-        } else {
-            return nil
-        }
-    }
-
-    var description: String {
-        return "{Pipe | Contents: \(stream.description)}"
-    }
-}
-
 struct Day7: Day {
     func run(input: String) {
         let program = input.filter { !$0.isWhitespace }.split(separator: ",").map { str in

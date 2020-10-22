@@ -3,16 +3,18 @@ import ArgumentParser
 
 struct AOCLauncher: ParsableCommand {
     @Argument(help: "The AOC-2019 day to run")
-    var day: Int = 7
+    var day: Int = 13
 
     @Argument(help: "The input file path")
-    var filePath: String = "/Users/ezekielelin/github_repositories/advent-of-code-2019/input-7.txt"
+    var filePath: String = "/Users/ezekielelin/github_repositories/advent-of-code-2019/input-13.txt"
 
     static var days: [Int: Day] = [
         1: Day1(),
         2: Day2(),
         5: Day5(),
-        7: Day7()
+        7: Day7(),
+        9: Day9(),
+        13: Day13()
     ]
 
     func validate() throws {
