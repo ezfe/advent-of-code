@@ -31,22 +31,25 @@ struct Day13: Day {
             computer.memory[0] = 2 // insert coin
         }
 
-        var screen = [Pair: Int]()
         var score = 0
+        var blockCount = 0
 
         while !computer.halted {
             computer = IntcodeState.advanceMulti(computer)
 
+            var ballX = 0
+            var paddleX = 0
             while let x = output.read(), let y = output.read(), let tileID = output.read() {
                 if x == -1 && y == 0 {
                     score = tileID
-                } else {
-                    screen[Pair(x: x, y: y)] = tileID
+                } else if tileID == 2 && first {
+                    blockCount += 1
+                } else if tileID == 3 {
+                    paddleX = x
+                } else if tileID == 4 {
+                    ballX = x
                 }
             }
-
-            let ballX = screen.first { $0.value == 4 }!.key.x
-            let paddleX = screen.first { $0.value == 3 }!.key.x
 
             if ballX > paddleX {
                 input.write(1)
@@ -58,7 +61,7 @@ struct Day13: Day {
         }
 
         if first {
-            print(screen.values.filter { $0 == 2 }.count)
+            print(blockCount)
         } else {
             print(score)
         }
