@@ -3,17 +3,18 @@ import ArgumentParser
 
 struct AOCLauncher: ParsableCommand {
     @Argument(help: "The year to run")
-    var year: Int = 2015
+    var year: Int = 2020
     
     @Argument(help: "The day to run")
-    var day: Int = 16
+    var day: Int = 1
 
     @Argument(help: "The input file path")
     var filePath: String?
 
     static var years: [Int: [Int: Day]] = [
         2015: entryPoints2015,
-        2019: entryPoints2019
+        2019: entryPoints2019,
+        2020: entryPoints2020
     ]
 
     func validate() throws {
@@ -35,18 +36,6 @@ struct AOCLauncher: ParsableCommand {
             url = URL(fileURLWithPath: "/Users/ezekielelin/github_repositories/advent-of-code/Input/\(year)/input-\(day).txt")
         }
         let input = try String(contentsOf: url)
-//        let input = """
-//        deal into new stack
-//        cut -2
-//        deal with increment 7
-//        cut 8
-//        cut -4
-//        deal with increment 7
-//        cut 3
-//        deal with increment 9
-//        deal with increment 3
-//        cut -1
-//        """
 
         let year = AOCLauncher.years[self.year]!
         let day = year[self.day]!
