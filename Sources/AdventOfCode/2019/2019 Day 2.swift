@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Day2: Day {
+struct Day2019_2: Day {
     func run(input: String) {
         let program = input.filter { !$0.isWhitespace }.split(separator: ",").map { str in
             return Int(str)!

@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  Day 13.swift
 //
 //
 //  Created by Ezekiel Elin on 10/21/20.
@@ -8,7 +8,7 @@
 import Foundation
 import Algorithms
 
-struct Day13: Day {
+struct Day2019_13: Day {
     struct Pair: Hashable, Equatable {
         let x: Int
         let y: Int

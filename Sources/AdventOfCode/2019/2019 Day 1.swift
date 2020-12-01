@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Day1: Day {
+struct Day2019_1: Day {
     func fuelFor(mass: Int) -> (Int, Int) {
         let calculated = mass / 3 - 2
         if calculated <= 0 {
