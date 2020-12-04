@@ -10,4 +10,5 @@ import Foundation
 let entryPoints2020: [Int: Day] = [
     1: Day2020_1(),
     2: Day2020_2(),
+    3: Day2020_3()
 ]
