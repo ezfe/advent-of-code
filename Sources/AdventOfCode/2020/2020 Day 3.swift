@@ -2,7 +2,7 @@
 //  2020 Day 3.swift
 //  
 //
-//  Created by Ezekiel Elin on 10/20/20.
+//  Created by Ezekiel Elin on 12/3/20.
 //
 
 import Foundation
