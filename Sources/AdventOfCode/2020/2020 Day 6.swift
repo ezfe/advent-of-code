@@ -17,14 +17,8 @@ struct Day2020_6: Day {
     }
     
     func run1(groups: [Array<String>.SubSequence]) {
-        let setted: [Set<Character>] = groups.map { lines in
-            var set = Set<Character>()
-            lines.forEach { line in
-                Array(line).forEach {
-                    set.insert($0)
-                }
-            }
-            return set
+        let setted: [Set<Character>] = groups.map {
+            return Set($0.reduce([], +))
         }
 
         let counts = setted.map { $0.count }
@@ -34,13 +28,13 @@ struct Day2020_6: Day {
     func run2(groups: [Array<String>.SubSequence]) {
         let setted: [Set<Character>] = groups.map { lines in
             let sets = lines.map(Set.init)
-            guard var master = sets.first else {
+            guard var working = sets.first else {
                 return []
             }
             for set in sets.dropFirst() {
-                master = master.intersection(set)
+                working = working.intersection(set)
             }
-            return master
+            return working
         }
         
         let counts = setted.map { $0.count }
