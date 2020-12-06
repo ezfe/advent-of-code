@@ -6,7 +6,7 @@ struct AOCLauncher: ParsableCommand {
     var year: Int = 2020
     
     @Argument(help: "The day to run")
-    var day: Int = 5
+    var day: Int = 6
 
     @Argument(help: "The input file path")
     var filePath: String?
