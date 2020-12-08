@@ -16,6 +16,7 @@ struct Day2020_8: Day {
         let (_, acc) = terminates(ops: ops)
         print(acc)
         
+        // Part 2
         for i in 0..<ops.count {
             var modified = ops
             switch modified[i] {
