@@ -64,7 +64,7 @@ struct Day2020_10: Day {
     }
     
     func part1(adapters: [UInt8]) {
-        let devices = adapters + [adapters.max()! + 3]
+        let devices = adapters + [adapters.last! + 3]
 
         var previous: UInt8 = 0
         
