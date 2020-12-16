@@ -63,7 +63,7 @@ struct Day2020_13: Day {
         let found = ManagedAtomic(Int.max)
 
         let group = DispatchGroup()
-        var groups = 8
+        let groups = 8
         for i in 0..<groups {
             group.enter()
             queue.async {
