@@ -56,14 +56,15 @@ struct Day2020_13: Day {
             i1.route > i2.route
         }
         
-        let k = 100_000_000_000_000 / routes[0].route
+        let k = 100000000000000 / routes[0].route
         let queue = DispatchQueue(label: "processing-queue", qos: .userInitiated, attributes: .concurrent)
         
-        let found = ManagedAtomic(false)
-        
+        // k
+        let found = ManagedAtomic(Int.max)
+
         let group = DispatchGroup()
-        
-        for i in 0..<8 {
+        var groups = 8
+        for i in 0..<groups {
             group.enter()
             queue.async {
                 part2Process(k: k + i, routes: routes)
@@ -75,7 +76,7 @@ struct Day2020_13: Day {
         
         func part2Process(k: Int, routes: [(index: Int, route: Int)]) {
             var k = k
-            while !found.load(ordering: .relaxed) {
+            while found.load(ordering: .relaxed) > k {
                 let target = routes[0].route * k
                 var failed = false
                 for (i, route) in routes {
@@ -85,13 +86,14 @@ struct Day2020_13: Day {
                     }
                 }
                 if failed {
-                    k += 4
+                    k += groups
                 } else {
-                    found.store(true, ordering: .relaxed)
+                    found.store(k, ordering: .relaxed)
                     print(routes[0].route * k)
                     break
                 }
             }
+            print("Ended thread at \(k)")
         }
     }
 }
