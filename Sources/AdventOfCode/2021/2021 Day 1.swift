@@ -16,27 +16,22 @@ struct Day2021_1: Day {
                 Int($0)!
             }
         
-        part1(depths: depths)
-        part2(depths: depths)
+        routine(depths: depths, window: 1)
+        routine(depths: depths, window: 3)
     }
     
-    func part1(depths: [Int]) {
-        var increases = 0
-        for i in 1..<depths.count {
-            if depths[i] > depths[i - 1] {
-                increases += 1
-            }
+    func sum(_ depths: [Int], from start: Int, window: Int) -> Int {
+        var sum = 0
+        for delta in 0..<window {
+            sum += depths[start - delta]
         }
-        
-        print(increases)
+        return sum
     }
     
-    func part2(depths: [Int]) {
+    func routine(depths: [Int], window: Int) {
         var increases = 0
-        for i in 3..<depths.count {
-            let current = depths[i] + depths[i-1] + depths[i-2]
-            let previous = depths[i-1] + depths[i-2] + depths[i-3]
-            if current > previous {
+        for i in window..<depths.count {
+            if sum(depths, from: i, window: window) > sum(depths, from: i - 1, window: window) {
                 increases += 1
             }
         }
