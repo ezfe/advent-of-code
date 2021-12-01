@@ -34,10 +34,10 @@ struct Day2020_16: Day {
                                     (Int(range2[0])!, Int(range2[1])!)
                                   ])
             }
-        let yourTicket = lines[(ytIndex + 1)..<nbtIndex]
-            .first!
-            .split(separator: ",")
-            .map { Int($0)! }
+//        let yourTicket = lines[(ytIndex + 1)..<nbtIndex]
+//            .first!
+//            .split(separator: ",")
+//            .map { Int($0)! }
         let nearbyTickets = lines[(nbtIndex + 1)...]
             .map {
                 $0.split(separator: ",")
@@ -53,9 +53,9 @@ struct Day2020_16: Day {
         print(failedSum)
         
         // Part 2
-        let ticketsPassing = nearbyTickets.filter {
-            isValid(ticket: $0, constraints: constraints)
-        }
+//        let ticketsPassing = nearbyTickets.filter {
+//            isValid(ticket: $0, constraints: constraints)
+//        }
         
     }
     
@@ -64,10 +64,8 @@ struct Day2020_16: Day {
         
         ticketLoop: for value in ticket {
             for constraint in constraints {
-                for range in constraint.ranges {
-                    if value >= range.0 && value <= range.1 {
-                        continue ticketLoop // value passes with this constraint
-                    }
+                if isValid(value: value, constraint: constraint) {
+                    continue ticketLoop // value passes with this constraint
                 }
             }
             failedValues.append(value)
@@ -76,13 +74,20 @@ struct Day2020_16: Day {
         return failedValues
     }
     
+    func isValid(value: Int, constraint: Constraint) -> Bool {
+        for range in constraint.ranges {
+            if value >= range.0 && value <= range.1 {
+                return true
+            }
+        }
+        return false
+    }
+    
     func isValid(ticket: [Int], constraints: [Constraint]) -> Bool {
         ticketLoop: for value in ticket {
             for constraint in constraints {
-                for range in constraint.ranges {
-                    if value >= range.0 && value <= range.1 {
-                        continue ticketLoop // value passes with this constraint
-                    }
+                if isValid(value: value, constraint: constraint) {
+                    continue ticketLoop // value passes with this constraint
                 }
             }
             break
@@ -91,12 +96,31 @@ struct Day2020_16: Day {
     }
     
     func determineLabels(tickets: [[Int]], constraints: [Constraint]) -> [String] {
-        var labels: [String?] = Array(repeating: nil, count: tickets.first!.count)
         
-        for i in 0..<labels.count {
-            // to-do
-        }
+//        var candidates = Array(repeating: Set(0..<constraints.count),
+//                               count: tickets.first!.count)
+//
+//        var changes = false
+//        repeat {
+//            let singleResult = (candidates.first { $0.count == 1 })!.first!
+//            candidates = candidates.map { set in
+//                if set.count <= 1 {
+//                    return set // don't modify single-item sets
+//                } else {
+//                    return set.filter { $0 != singleResult }
+//                }
+//            }
+//        } while changes;
+//
+//        //
+//
+//        for ticket in tickets {
+//            for (valueIndex, value) in ticket.enumerated() {
+//                var currentCandidates = candidates[i]
+//
+//            }
+//        }
         
-        return labels.map { $0! }
+        return []
     }
 }

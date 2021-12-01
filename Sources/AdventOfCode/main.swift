@@ -3,10 +3,10 @@ import ArgumentParser
 
 struct AOCLauncher: ParsableCommand {
     @Argument(help: "The year to run")
-    var year: Int = 2020
+    var year: Int = AOCLauncher.years.keys.max()!
     
     @Argument(help: "The day to run")
-    var day: Int = entryPoints2020.keys.max()!
+    var day: Int = AOCLauncher.years[AOCLauncher.years.keys.max()!]!.keys.max()!
 
     @Argument(help: "The input file path")
     var filePath: String?
@@ -14,7 +14,8 @@ struct AOCLauncher: ParsableCommand {
     static var years: [Int: [Int: Day]] = [
         2015: entryPoints2015,
         2019: entryPoints2019,
-        2020: entryPoints2020
+        2020: entryPoints2020,
+        2021: entryPoints2021,
     ]
 
     func validate() throws {
