@@ -6,8 +6,8 @@
         "repositoryURL": "https://github.com/apple/swift-algorithms",
         "state": {
           "branch": null,
-          "revision": "6cffd04a4f09cb9111d98ee70dc4314fcb5fc56e",
-          "version": "0.0.1"
+          "revision": "2327673b0e9c7e90e6b1826376526ec3627210e4",
+          "version": "0.2.1"
         }
       },
       {
@@ -15,8 +15,8 @@
         "repositoryURL": "https://github.com/apple/swift-argument-parser.git",
         "state": {
           "branch": null,
-          "revision": "92646c0cdbaca076c8d3d0207891785b3379cbff",
-          "version": "0.3.1"
+          "revision": "6b2aa2748a7881eebb9f84fb10c01293e15b52ca",
+          "version": "0.5.0"
         }
       },
       {
@@ -24,8 +24,17 @@
         "repositoryURL": "https://github.com/apple/swift-atomics.git",
         "state": {
           "branch": null,
-          "revision": "26e346cd64f6b92d4089e7fafe2f8e82f60ddb8c",
-          "version": "0.0.2"
+          "revision": "3e95ba32cd1b4c877f6163e8eea54afc4e63bf9f",
+          "version": "0.0.3"
+        }
+      },
+      {
+        "package": "swift-numerics",
+        "repositoryURL": "https://github.com/apple/swift-numerics",
+        "state": {
+          "branch": null,
+          "revision": "6583ac70c326c3ee080c1d42d9ca3361dca816cd",
+          "version": "0.1.0"
         }
       }
     ]
