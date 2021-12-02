@@ -6,15 +6,14 @@
 //
 
 import Foundation
-import Algorithms
-
-fileprivate enum Instruction {
-    case forward(Int)
-    case down(Int)
-    case up(Int)
-}
 
 struct Day2021_2: Day {
+    enum Instruction {
+        case forward(Int)
+        case down(Int)
+        case up(Int)
+    }
+    
     func run(input: String) {
         let instructions = input
             .split(whereSeparator: \.isNewline)
@@ -39,7 +38,7 @@ struct Day2021_2: Day {
         part2(instructions: instructions)
     }
     
-    fileprivate func part1(instructions: [Instruction]) {
+    func part1(instructions: [Instruction]) {
         var x = 0
         var depth = 0
         for ins in instructions {
@@ -56,7 +55,7 @@ struct Day2021_2: Day {
         print(x * depth)
     }
     
-    fileprivate func part2(instructions: [Instruction]) {
+    func part2(instructions: [Instruction]) {
         var x = 0
         var depth = 0
         var aim = 0
