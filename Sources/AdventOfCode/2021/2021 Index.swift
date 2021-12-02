@@ -9,7 +9,7 @@ import Foundation
 
 let entryPoints2021: [Int: Day] = [
     1: Day2021_1(),
-//    2: Day2020_2(),
+    2: Day2021_2(),
 //    3: Day2020_3(),
 //    4: Day2020_4(),
 //    5: Day2020_5(),
