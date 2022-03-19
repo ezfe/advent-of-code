@@ -5,6 +5,9 @@ import PackageDescription
 
 let package = Package(
     name: "advent-of-code",
+    platforms: [
+        .macOS(.v11)
+    ],
     dependencies: [
         // Dependencies declare other packages that this package depends on.
         .package(url: "https://github.com/apple/swift-argument-parser.git", from: "1.0.0"),
