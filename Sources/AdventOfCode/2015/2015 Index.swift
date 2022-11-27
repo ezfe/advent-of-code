@@ -7,6 +7,8 @@
 
 import Foundation
 
-let entryPoints2015: [Int: Day] = [
-    16: Day2015_16(),
-]
+struct EntryPoints2015: EntryPoints {
+	let entryPoints: [Int: Day] = [
+		16: Day2015_16(),
+	]
+}
