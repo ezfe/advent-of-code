@@ -10,15 +10,15 @@ import Foundation
 struct Day2021_3: Day {
 	
 	let len = 12
-	let bitmask: UInt16 = 0xFFF
 	
 	func run(input: String) {
-		let lines = input
-			.split(whereSeparator: \.isNewline)
-			.map { UInt16($0, radix: 2)! }
+		let lines_txt = input.split(whereSeparator: \.isNewline)
+		let lines = lines_txt.map { UInt16($0, radix: 2)! }
 		
-		part1(lines: lines)
-		part2(lines: lines)
+		let chars = UInt8(lines_txt.first!.count)
+		
+		part1(lines: lines, bitCount: chars)
+		part2(lines: lines, bitCount: chars)
 	}
 	
 	func gamma(lines: [UInt16]) -> UInt16 {
@@ -35,14 +35,20 @@ struct Day2021_3: Day {
 		return gamma
 	}
 	
-	func part1(lines: [UInt16]) {
+	func epsilon(gamma: UInt16, bitCount: UInt8) -> UInt16 {
+		let bitmask = UInt16(pow(2.0, Double(bitCount)) - 1)
+		return ~gamma & bitmask
+	}
+	
+	func part1(lines: [UInt16], bitCount: UInt8) {
 		let gamma = gamma(lines: lines)
-		let epsilon = ~gamma & bitmask
+		let epsilon = epsilon(gamma: gamma, bitCount: bitCount)
+		print("gamma: \(gamma); epsilon: \(epsilon)")
 		print(UInt32(gamma) * UInt32(epsilon))
 	}
 	
-	func part2(lines: [UInt16]) {
-		var searchBit: UInt16 = 1 << (len - 1)
+	func part2(lines: [UInt16], bitCount: UInt8) {
+		var searchBit = UInt16(pow(2, Double(bitCount - 1)))
 		
 		var oxygenNumbers = lines
 		while oxygenNumbers.count > 1 {
@@ -51,31 +57,30 @@ struct Day2021_3: Day {
 				($0 & searchBit) == (gamma & searchBit)
 			}
 			if newNumbers.isEmpty {
-				oxygenNumbers = [oxygenNumbers.last!]
+				assertionFailure("Filtered out all the numbers!")
 			} else {
 				oxygenNumbers = newNumbers
 			}
 			searchBit >>= 1
 		}
 		
-		searchBit = 1 << (len - 1)
+		searchBit = UInt16(pow(2, Double(bitCount - 1)))
 		
 		var co2Numbers = lines
 		while co2Numbers.count > 1 {
-			let gamma = gamma(lines: oxygenNumbers)
+			let gamma = epsilon(gamma: gamma(lines: co2Numbers), bitCount: bitCount)
 			let newNumbers = co2Numbers.filter {
-				($0 & searchBit) != (gamma & searchBit)
+				($0 & searchBit) == (gamma & searchBit)
 			}
 			if newNumbers.isEmpty {
-				co2Numbers = [co2Numbers.last!]
+				assertionFailure("Filtered out all the numbers!")
 			} else {
 				co2Numbers = newNumbers
 			}
 			searchBit >>= 1
 		}
 		
-		print(oxygenNumbers[0])
-		print(co2Numbers[0])
+		print("O2: \(oxygenNumbers[0]); CO2: \(co2Numbers[0])")
 		print(UInt32(oxygenNumbers[0]) * UInt32(co2Numbers[0]))
 	}
 }
