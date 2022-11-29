@@ -16,6 +16,7 @@ struct EntryPoints2021: EntryPoints {
 		4: Day2021_4(),
 		5: Day2021_5(),
 		6: Day2021_6(),
+		7: Day2021_7(),
 		25: Day2021_25()
 	]
 }
