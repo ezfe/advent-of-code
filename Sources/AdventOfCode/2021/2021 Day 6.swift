@@ -2,11 +2,10 @@
 //  2021 Day 6.swift
 //  
 //
-//  Created by Ezekiel Elin on 12/1/20.
+//  Created by Ezekiel Elin on 11/29/20.
 //
 
 import Foundation
-import RegexBuilder
 
 struct Day2021_6: Day {
 	func run(input: String) {

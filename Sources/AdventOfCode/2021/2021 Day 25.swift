@@ -6,7 +6,6 @@
 //
 
 import Foundation
-import RegexBuilder
 
 struct Day2021_25: Day {
 	struct Board: CustomStringConvertible, Equatable {

@@ -25,29 +25,13 @@ struct Day2021_5: Day {
 		let endXRef = Reference(Int.self)
 		let endYRef = Reference(Int.self)
 		let lineRegex = Regex {
-			TryCapture(as: startXRef) {
-				OneOrMore(.digit)
-			} transform: { match in
-				 Int(match)
-			}
+			TryCapture(as: startXRef) { OneOrMore(.digit) } transform: { Int($0) }
 			","
-			TryCapture(as: startYRef) {
-				OneOrMore(.digit)
-			} transform: { match in
-				 Int(match)
-			}
+			TryCapture(as: startYRef) { OneOrMore(.digit) } transform: { Int($0) }
 			" -> "
-			TryCapture(as: endXRef) {
-				OneOrMore(.digit)
-			} transform: { match in
-				 Int(match)
-			}
+			TryCapture(as: endXRef) { OneOrMore(.digit) } transform: { Int($0) }
 			","
-			TryCapture(as: endYRef) {
-				OneOrMore(.digit)
-			} transform: { match in
-				 Int(match)
-			}
+			TryCapture(as: endYRef) { OneOrMore(.digit) } transform: { Int($0) }
 		}
 		let lines = input.split(whereSeparator: \.isNewline)
 			.map { lineText in
