@@ -7,11 +7,12 @@
 
 struct Day2022_1: Day {
 	func run(input: String) {
-		let elves = input.split(separator: #/\n\n/#).map { $0.split(whereSeparator: \.isNewline).map { Int($0)! } }
+		let elves = input
+			.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
+			.split(whereSeparator: \.isEmpty)
+			.map { $0.compactMap(\.integer).sum() }
 		
-		let top3 = elves.map { $0.reduce(0, +) }.sorted().reversed()[0..<3]
-		
-		print(top3.first!)
-		print(top3.reduce(0, +))
+		print(elves.max()!)
+		print(elves.max(count: 3).sum())
 	}
 }
