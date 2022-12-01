@@ -1,6 +1,6 @@
 //
 //  2020 Day 13.swift
-//  
+//
 //
 //  Created by Ezekiel Elin on 12/13/20.
 //
@@ -18,29 +18,16 @@ struct Day2020_13: Day {
 	
 	func part1<T: StringProtocol>(lines: [T]) {
 		let earliestDeparture = Int(lines[0])!
-		let routes = lines[1].split(separator: ",").compactMap { rid in
-			return Int(rid)
-		}
+		let routes = lines[1].split(separator: ",").compactMap { Int($0) }
 		
-		var soonestTime = Int.max
-		var soonestId = Int.max
-		
-		for route in routes {
+		let (untilNextDeparture, selectedRoute) = routes.map { route in
 			let sinceMostRecent = earliestDeparture % route
-			if sinceMostRecent == 0 {
-				soonestTime = 0
-				soonestId = route
-				break
-			} else {
-				let next = (route - sinceMostRecent)
-				if next < soonestTime {
-					soonestTime = next
-					soonestId = route
-				}
-			}
-		}
+			let untilNextDeparture = route - sinceMostRecent
+			
+			return (untilNextDeparture, route)
+		}.sorted { $0.0 < $1.0 }.first!
 		
-		print(soonestId * soonestTime)
+		print(selectedRoute * untilNextDeparture)
 	}
 	
 	func part2<T: StringProtocol>(lines: [T]) {
