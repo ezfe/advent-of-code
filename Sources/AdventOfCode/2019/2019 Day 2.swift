@@ -8,7 +8,7 @@
 import Foundation
 
 struct Day2019_2: Day {
-	func run(input: String) {
+	func run(input: String) async {
 		let program = input.filter { !$0.isWhitespace }.split(separator: ",").map { str in
 			return Int(str)!
 		}
@@ -21,7 +21,7 @@ struct Day2019_2: Day {
 		}
 		
 		do {
-			DispatchQueue.concurrentPerform(iterations: 99) { i1 in
+			let _ = await concurrentPerform(input: Array(0..<99)) { i1 -> Void in
 				for i2 in 0...99 {
 					var computer = IntcodeState(memory: program)
 					computer.memory[1] = i1
