@@ -4,10 +4,10 @@ import Foundation
 @main
 struct AOCLauncher: AsyncParsableCommand {
 	@Argument(help: "The year to run")
-	var year: Int = 2021
+	var year: Int = 2022
 	
 	@Argument(help: "The day to run")
-	var day: Int = 2
+	var day: Int = 1
 	
 	@Argument(help: "The input file path")
 	var filePath: String?
@@ -46,7 +46,14 @@ struct AOCLauncher: AsyncParsableCommand {
 			} else if (fm.fileExists(atPath: folderInput.path)) {
 				let contents = try fm.contentsOfDirectory(atPath: folderInput.path).filter { file in
 					file.hasSuffix(".txt")
-				}
+				}.sorted(by: { fn1, fn2 in
+					if fn1 == "main.txt" {
+						return false
+					} else {
+						return fn1 > fn2
+					}
+				})
+
 				for fileName in contents {
 					let filePath = folderInput.appending(component: fileName)
 					try await run(inputFile: filePath, label: fileName)
