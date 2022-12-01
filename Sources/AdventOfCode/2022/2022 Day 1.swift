@@ -1,5 +1,5 @@
 //
-//  2020 Day 1.swift
+//  2022 Day 1.swift
 //  
 //
 //  Created by Ezekiel Elin on 12/1/20.
