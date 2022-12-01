@@ -2,7 +2,7 @@
 //  2022 Day 1.swift
 //  
 //
-//  Created by Ezekiel Elin on 12/1/20.
+//  Created by Ezekiel Elin on 11/30/22.
 //
 
 struct Day2022_1: Day {
