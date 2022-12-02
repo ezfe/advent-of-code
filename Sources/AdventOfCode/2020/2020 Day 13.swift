@@ -18,7 +18,7 @@ struct Day2020_13: Day {
 	
 	func part1<T: StringProtocol>(lines: [T]) {
 		let earliestDeparture = Int(lines[0])!
-		let routes = lines[1].split(separator: ",").compactMap { Int($0) }
+		let routes = lines[1].split(separator: ",").compactMap(\.integer)
 		
 		let (untilNextDeparture, selectedRoute) = routes.map { route in
 			let sinceMostRecent = earliestDeparture % route

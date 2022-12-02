@@ -13,7 +13,7 @@ struct Day2020_15: Day {
 			.split(whereSeparator: \.isNewline)
 			.first!
 			.split(separator: ",")
-			.map { Int($0)! }
+			.compactMap(\.integer)
 		
 		read(starters: starters, to: 2020)
 		read(starters: starters, to: 30000000)
