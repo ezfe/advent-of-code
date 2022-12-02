@@ -9,11 +9,11 @@ import Foundation
 import Atomics
 
 struct Day2020_13: Day {
-	func run(input: String) {
+	func run(input: String) async {
 		let lines = input.split(whereSeparator: \.isNewline)
 		
 		part1(lines: lines)
-		part2(lines: lines)
+		await part2(lines: lines)
 	}
 	
 	func part1<T: StringProtocol>(lines: [T]) {
@@ -30,57 +30,47 @@ struct Day2020_13: Day {
 		print(selectedRoute * untilNextDeparture)
 	}
 	
-	func part2<T: StringProtocol>(lines: [T]) {
+	func part2<T: StringProtocol>(lines: [T]) async {
+		let coreCount = UInt(8)
 		let routes = lines[1].split(separator: ",").map { rid in
 			return Int(rid)
-		}.enumerated().compactMap { (eseqel) -> (index: Int, route: Int)? in
-			if let el = eseqel.element {
-				return (index: eseqel.offset, route: el)
-			} else {
-				return nil
-			}
-		}.sorted { (i1, i2) -> Bool in
-			i1.route > i2.route
 		}
 		
-		let k = 100000000000000 / routes[0].route
-		let queue = DispatchQueue(label: "processing-queue", qos: .userInitiated, attributes: .concurrent)
-		
-		// k
-		let found = ManagedAtomic(Int.max)
-		
-		let group = DispatchGroup()
-		let groups = 8
-		for i in 0..<groups {
-			group.enter()
-			queue.async {
-				part2Process(k: k + i, routes: routes)
-				group.leave()
-			}
-		}
-		
-		group.wait()
-		
-		func part2Process(k: Int, routes: [(index: Int, route: Int)]) {
-			var k = k
-			while found.load(ordering: .relaxed) > k {
-				let target = routes[0].route * k
-				var failed = false
-				for (i, route) in routes {
-					if !(target + i).isMultiple(of: route) {
-						failed = true
-						break
-					}
+		await withTaskGroup(of: UInt.self) { group in
+			for offset in 0..<coreCount {
+				group.addTask {
+					return eval(offset: offset)
 				}
-				if failed {
-					k += groups
+			}
+			
+			print("Created group with 8 offsets, awaiting...")
+
+			let result = await group.first(where: { $0 > 0 })
+			print(result ?? "No result")
+			group.cancelAll()
+		}
+		
+		@Sendable
+		func eval(offset: UInt) -> UInt {
+			var i = offset
+			while i < UInt.max - coreCount {
+				if eval(start: i) {
+					return i
 				} else {
-					found.store(k, ordering: .relaxed)
-					print(routes[0].route * k)
-					break
+					i += coreCount
 				}
 			}
-			print("Ended thread at \(k)")
+			return 0
+		}
+		
+		@Sendable
+		func eval(start: UInt) -> Bool {
+			for (i, route) in routes.enumerated() {
+				if let route, (start + UInt(i)) % UInt(route) != 0 {
+					return false
+				}
+			}
+			return true
 		}
 	}
 }
