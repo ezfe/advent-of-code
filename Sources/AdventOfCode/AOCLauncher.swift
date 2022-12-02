@@ -3,14 +3,17 @@ import Foundation
 
 @main
 struct AOCLauncher: AsyncParsableCommand {
-	@Argument(help: "The year to run")
+	@Option(name: .shortAndLong, help: "The year to run")
 	var year: Int = 2022
 	
-	@Argument(help: "The day to run")
-	var day: Int = 1
+	@Option(name: .shortAndLong, help: "The day to run")
+	var day: Int = 2
 	
-	@Argument(help: "The input file path")
+	@Option(name: .shortAndLong, help: "The input file path")
 	var filePath: String?
+	
+	@Option(name: .shortAndLong, help: "Session cookie for Advent of Code website")
+	var aocToken: String?
 	
 	static var years: [Int: EntryPoints] = [
 		2015: EntryPoints2015(),
@@ -40,6 +43,7 @@ struct AOCLauncher: AsyncParsableCommand {
 			let singleInput = inputDir.appending(component: "input-\(day).txt")
 			let folderInput = inputDir.appending(component: "input-\(day)")
 			
+			var foundMain = false
 			let fm = FileManager.default
 			if fm.fileExists(atPath: singleInput.path) {
 				try await self.run(inputFile: singleInput, label: "main")
@@ -55,19 +59,45 @@ struct AOCLauncher: AsyncParsableCommand {
 				})
 
 				for fileName in contents {
+					if fileName == "main.txt" {
+						foundMain = true
+					}
 					let filePath = folderInput.appending(component: fileName)
 					try await run(inputFile: filePath, label: fileName)
 				}
-			} else {
-				print("Failed to find input for \(year)/input-\(day)(.txt)?")
+			}
+
+			if !foundMain {
+				if let aocToken, let url = URL(string: "https://adventofcode.com/\(year)/day/\(day)/input") {
+					var request = URLRequest(url: url)
+					request.setValue("session=\(aocToken)",
+										  forHTTPHeaderField: "Cookie")
+					request.setValue("https://github.com/ezfe/advent-of-code; aoc-ua-contact@ezekiel.dev",
+										  forHTTPHeaderField: "User-Agent")
+					let (data, response) = try await URLSession.shared.data(for: request)
+					if let responseText = String(data: data, encoding: .utf8),
+						responseText.matches(of: "Please log in").isEmpty {
+						if responseText.matches(of: "don't repeatedly request this endpoint").isEmpty {
+							try await run(input: responseText, label: "auto-generated-request")
+						} else {
+							print("Puzzle \(year)/\(day) not yet available")
+						}
+					} else {
+						print("Failed to retrieve text from adventofcode.com")
+						print(response)
+					}
+				}
 			}
 		}
 	}
 	
 	private func run(inputFile: URL, label: String) async throws {
-		print("=== Starting Day \(self.day) <\(label)> ===")
 		let input = try String(contentsOf: inputFile)
-		
+		try await run(input: input, label: label)
+	}
+
+	private func run(input: String, label: String) async throws {
+		print("=== Starting Day \(self.day) <\(label)> ===")
 		let year = AOCLauncher.years[self.year]!
 		let day = year.entryPoints[self.day]!
 		
