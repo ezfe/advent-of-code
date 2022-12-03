@@ -8,11 +8,6 @@
 import Foundation
 
 struct Day2022_3: Day {
-	struct Group {
-		let badge: Character
-		let sacks: [[Character]]
-	}
-
 	func run(input: String) async {
 		let sacks = input
 			.split(whereSeparator: \.isNewline)
