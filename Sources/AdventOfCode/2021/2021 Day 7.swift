@@ -9,7 +9,7 @@ import Foundation
 
 struct Day2021_7: Day {
 	func run(input: String) {
-		let positions = input.split(separator: ",").compactMap(\.integer)
+		let positions = input.split(separator: ",").map(\.integer)
 		
 		let min = positions.min()!
 		let max = positions.max()!

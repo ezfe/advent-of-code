@@ -8,7 +8,11 @@
 import Foundation
 
 extension StringProtocol {
-	var integer: Int? {
+	var integer: Int {
+		return Int(self)!
+	}
+
+	var safeInteger: Int? {
 		return Int(self)
 	}
 }

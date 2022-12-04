@@ -9,7 +9,7 @@ import Foundation
 
 struct Day2020_9: Day {
 	func run(input: String) {
-		let lines = input.split(whereSeparator: \.isNewline).compactMap(\.integer)
+		let lines = input.split(whereSeparator: \.isNewline).map(\.integer)
 		
 		let p1 = part1(lines: lines)
 		print(p1)

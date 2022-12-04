@@ -9,7 +9,7 @@ import Foundation
 
 struct Day2021_6: Day {
 	func run(input: String) {
-		let agesList = input.split(separator: ",").compactMap(\.integer)
+		let agesList = input.split(separator: ",").map(\.integer)
 		var ages = [Int: Int]()
 		for age in agesList {
 			ages[age, default: 0] += 1

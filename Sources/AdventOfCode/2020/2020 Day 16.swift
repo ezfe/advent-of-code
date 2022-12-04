@@ -40,8 +40,7 @@ struct Day2020_16: Day {
 		//            .map { Int($0)! }
 		let nearbyTickets = lines[(nbtIndex + 1)...]
 			.map {
-				$0.split(separator: ",")
-					.compactMap(\.integer)
+				$0.split(separator: ",").map(\.integer)
 			}
 		
 		// Part 1

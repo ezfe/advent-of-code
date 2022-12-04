@@ -10,7 +10,7 @@ struct Day2022_1: Day {
 		let elves = input
 			.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
 			.split(whereSeparator: \.isEmpty)
-			.map { $0.compactMap(\.integer).sum() }
+			.map { $0.map(\.integer).sum() }
 		
 		print(elves.max()!)
 		print(elves.max(count: 3).sum())
