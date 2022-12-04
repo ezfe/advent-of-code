@@ -1,5 +1,5 @@
 //
-//  File.swift
+//  2022 Day 4.swift
 //  
 //
 //  Created by Ezekiel Elin on 12/4/22.
@@ -20,14 +20,14 @@ struct Day2022_4: Day {
 			let r1 = pair.0
 			let r2 = pair.1
 			
-			return (r1 ~= r2.lowerBound && r1 ~= r2.upperBound) || (r2 ~= r1.lowerBound && r2 ~= r1.upperBound)
+			return r1.fullyContains(other: r2) || r2.fullyContains(other: r1)
 		}
 		
 		let withPartialOverlap = ranges.filter { pair in
 			let r1 = pair.0
 			let r2 = pair.1
 			
-			return r1 ~= r2.lowerBound || r1 ~= r2.upperBound || r2 ~= r1.lowerBound || r2 ~= r1.upperBound
+			return r1.overlaps(r2)
 		}
 		
 		print(withFullSubset.count)
