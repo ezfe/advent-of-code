@@ -12,7 +12,7 @@ struct EntryPoints2022: EntryPoints {
 		1: Day2022_1(),
 		2: Day2022_2(),
 		3: Day2022_3(),
-		//    4: Day2022_4(),
+		4: Day2022_4(),
 		//    5: Day2022_5(),
 		//    6: Day2022_6(),
 		//    7: Day2022_7(),
