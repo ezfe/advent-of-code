@@ -9,18 +9,17 @@ import Foundation
 import Algorithms
 
 struct Day2021_1: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let depths = input
 			.split(whereSeparator: \.isNewline)
 			.map {
 				Int($0)!
 			}
 		
-		routine(depths: depths, window: 1)
-		routine(depths: depths, window: 3)
+		return (routine(depths: depths, window: 1), routine(depths: depths, window: 3))
 	}
 	
-	func routine(depths: [Int], window windowSize: Int) {
+	func routine(depths: [Int], window windowSize: Int) -> Int {
 		let _windows = depths.windows(ofCount: windowSize)
 		let windows = Array(_windows)
 		
@@ -31,6 +30,6 @@ struct Day2021_1: Day {
 			}
 		}
 		
-		print(increases)
+		return increases
 	}
 }

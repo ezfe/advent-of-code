@@ -8,13 +8,12 @@
 import Foundation
 
 struct Day2020_8: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline).map(String.init)
 		let ops = lines.map { Operation.parse(line: $0) }
 		
 		// Part 1
-		let (_, acc) = terminates(ops: ops)
-		print(acc)
+		let (_, acc1) = terminates(ops: ops)
 		
 		// Part 2
 		for i in 0..<ops.count {
@@ -27,11 +26,13 @@ struct Day2020_8: Day {
 				default:
 					continue
 			}
-			let (ends, acc) = terminates(ops: modified)
+			let (ends, acc2) = terminates(ops: modified)
 			if ends {
-				print(acc)
+				print(acc2)
+				return (acc1, acc2)
 			}
 		}
+		return (acc1, nil)
 	}
 	
 	func terminates(ops: [Operation]) -> (terminated: Bool, acc: Int) {

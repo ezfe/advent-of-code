@@ -8,16 +8,15 @@
 import Foundation
 
 struct Day2020_4: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let tokens = input.split(omittingEmptySubsequences: false, whereSeparator: \.isWhitespace)
 		
 		let passports = tokens.split(whereSeparator: { $0.isEmpty })
 		
-		run(passports: passports, part2: false)
-		run(passports: passports, part2: true)
+		return(run(passports: passports, part2: false), run(passports: passports, part2: true))
 	}
 	
-	func run(passports: [Array<String.SubSequence>.SubSequence], part2: Bool) {
+	func run(passports: [Array<String.SubSequence>.SubSequence], part2: Bool) -> Int {
 		var pass = 0
 		for passport in passports {
 			var found = Set<Substring.SubSequence>()
@@ -98,7 +97,8 @@ struct Day2020_4: Day {
 				// fail
 			}
 		}
-		print(pass)
+		
+		return pass
 	}
 	
 	func isNumber(str: Substring.SubSequence, min: Int, max: Int) -> Bool {

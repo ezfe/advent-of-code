@@ -15,7 +15,7 @@ struct Day2019_22: Day {
 		case dealIncrement(Int)
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline)
 		let actions = lines.map { line -> Shuffle in
 			if line.starts(with: "c") {
@@ -39,7 +39,8 @@ struct Day2019_22: Day {
 		for _ in 0..<repeats {
 			i = iteration(actions: actions, startingIndex: i, size: M)
 		}
-		print(i)
+		
+		return (i, nil)
 	}
 	
 	func iteration(actions: [Shuffle], startingIndex: Int, size: Int) -> Int {

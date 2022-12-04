@@ -6,16 +6,15 @@
 //
 
 struct Day2022_2: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline).map { line in
 			line.split(whereSeparator: \.isWhitespace)
 		}
 		
-		part1(lines: lines)
-		part2(lines: lines)
+		return (part1(lines: lines), part2(lines: lines))
 	}
 	
-	func part1(lines: [[Substring.SubSequence]]) {
+	func part1(lines: [[Substring.SubSequence]]) -> Int {
 		var score = 0
 		for line in lines {
 			if line[1] == "X" {
@@ -49,16 +48,10 @@ struct Day2022_2: Day {
 			}
 		}
 		
-		print(score)
+		return score
 	}
 
-	func part2(lines: [[Substring.SubSequence]]) {
-		// A Rock 1
-		// B Paper 2
-		// C Scissors 3
-		// X Lose
-		// Y Draw
-		// Z Win
+	func part2(lines: [[Substring.SubSequence]]) -> Int {
 		var score = 0
 		for line in lines {
 			if line[1] == "Y" {
@@ -94,6 +87,6 @@ struct Day2022_2: Day {
 			}
 		}
 		
-		print(score)
+		return score
 	}
 }

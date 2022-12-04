@@ -15,6 +15,9 @@ struct AOCLauncher: AsyncParsableCommand {
 	@Option(name: .shortAndLong, help: "Session cookie for Advent of Code website")
 	var aocToken: String?
 	
+	@Option(name: .shortAndLong, help: "Run multiple iterations. Only applies when sourced from AOC website")
+	var iterations: UInt = 10
+	
 	static var years: [Int: EntryPoints] = [
 		2015: EntryPoints2015(),
 		2019: EntryPoints2019(),
@@ -78,7 +81,7 @@ struct AOCLauncher: AsyncParsableCommand {
 					if let responseText = String(data: data, encoding: .utf8),
 						responseText.matches(of: "Please log in").isEmpty {
 						if responseText.matches(of: "don't repeatedly request this endpoint").isEmpty {
-							try await run(input: responseText, label: "auto-generated-request")
+							try await run(input: responseText, label: "auto-generated-request", repeated: iterations)
 						} else {
 							print("Puzzle \(year)/\(day) not yet available")
 						}
@@ -95,18 +98,37 @@ struct AOCLauncher: AsyncParsableCommand {
 		let input = try String(contentsOf: inputFile)
 		try await run(input: input, label: label)
 	}
-
-	private func run(input: String, label: String) async throws {
+	
+	private func run(input: String, label: String, repeated runCount: UInt = 1) async throws {
 		print("=== Starting Day \(self.day) <\(label)> ===")
 		let year = AOCLauncher.years[self.year]!
 		let day = year.entryPoints[self.day]!
 		
-		let start = CFAbsoluteTimeGetCurrent()
-		await day.run(input: input)
-		let end = CFAbsoluteTimeGetCurrent()
+		var runTimes = [Double]()
+		for i in 0..<runCount {
+			let start = CFAbsoluteTimeGetCurrent()
+			let (part1, part2) = await day.run(input: input)
+			let end = CFAbsoluteTimeGetCurrent()
+			let micro = (end - start) * 1000000
+			runTimes.append(micro)
+			
+			if i == 0 {
+				if let part1 {
+					print("Part 1: \(part1)")
+				}
+				if let part2 {
+					print("Part 2: \(part2)")
+				}
+			}
+		}
 		
-		let elapsed = end - start
-		let micro = elapsed * 1000000
-		print("=== Completed Day \(self.day) <\(label)> in \(micro) μs ===")
+		let averageMicro = runTimes.average()
+		let stdDevMicro = runTimes.standardDeviation()
+		
+		if !stdDevMicro.isNaN {
+			print("=== Completed Day \(self.day) <\(label)> – \(Int(averageMicro)) ± \(stdDevMicro) μs / \(runCount) iterations ===")
+		} else {
+			print("=== Completed Day \(self.day) <\(label)> – \(Int(averageMicro)) μs ===")
+		}
 	}
 }

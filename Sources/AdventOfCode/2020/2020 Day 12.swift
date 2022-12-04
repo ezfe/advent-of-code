@@ -42,7 +42,7 @@ struct Day2020_12: Day {
 		}
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let layout = input.split(whereSeparator: \.isNewline).map { Instruction.parse(line: $0) }
 		
 		// north = 0°, +x
@@ -50,11 +50,10 @@ struct Day2020_12: Day {
 		// south = 180°, -x
 		// west = 270°, -z
 		
-		part1(layout: layout)
-		part2(layout: layout)
+		return (part1(layout: layout), part2(layout: layout))
 	}
 	
-	func part1(layout: [Instruction]) {
+	func part1(layout: [Instruction]) -> Int {
 		var x = 0
 		var z = 0
 		var direction = 90
@@ -88,10 +87,10 @@ struct Day2020_12: Day {
 			}
 		}
 		
-		print(abs(x) + abs(z))
+		return abs(x) + abs(z)
 	}
 	
-	func part2(layout: [Instruction]) {
+	func part2(layout: [Instruction]) -> Int {
 		var wptdX = 1
 		var wptdZ = 10
 		var x = 0
@@ -120,7 +119,8 @@ struct Day2020_12: Day {
 					z += wptdZ * amnt
 			}
 		}
-		print(abs(x) + abs(z))
+		
+		return abs(x) + abs(z)
 	}
 	
 	func normalize(direction: Int) -> Int {

@@ -25,7 +25,7 @@ struct Day2020_17: Day {
 		case inactive = "."
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input
 			.split(whereSeparator: \.isNewline)
 			.map { line in
@@ -50,6 +50,8 @@ struct Day2020_17: Day {
 			printGrid(grid: new, at: 2)
 			new = advance(grid: new)
 		}
+		
+		return (nil, nil)
 	}
 	
 	func advance(grid: [Coord: State]) -> [Coord: State] {

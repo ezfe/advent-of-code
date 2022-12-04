@@ -19,7 +19,7 @@ struct Day2021_5: Day {
 		let b: Coordinate
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let startXRef = Reference(Int.self)
 		let startYRef = Reference(Int.self)
 		let endXRef = Reference(Int.self)
@@ -43,11 +43,10 @@ struct Day2021_5: Day {
 				return Line(a: start, b: end)
 			}
 		
-		part1(lines: lines, diagonalLineCheck: false)
-		part1(lines: lines, diagonalLineCheck: true)
+		return (process(lines: lines, diagonalLineCheck: false), process(lines: lines, diagonalLineCheck: true))
 	}
 	
-	func part1(lines: [Line], diagonalLineCheck: Bool) {
+	func process(lines: [Line], diagonalLineCheck: Bool) -> Int {
 		let horizontalLines = lines.filter { $0.a.y == $0.b.y }
 		let verticalLines = lines.filter { $0.a.x == $0.b.x }
 		
@@ -100,6 +99,6 @@ struct Day2021_5: Day {
 				}
 			}
 		}
-		print(qualifyingPoints.count)
+		return qualifyingPoints.count
 	}
 }

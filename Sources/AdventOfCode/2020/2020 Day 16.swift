@@ -13,7 +13,7 @@ struct Day2020_16: Day {
 		let ranges: [(Int, Int)]
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline)
 		
 		let ytIndex = lines.firstIndex(of: "your ticket:")!
@@ -49,7 +49,7 @@ struct Day2020_16: Day {
 			.reduce([], +)
 			.reduce(0, +)
 		
-		print(failedSum)
+		return (failedSum, nil)
 		
 		// Part 2
 		//        let ticketsPassing = nearbyTickets.filter {

@@ -8,7 +8,7 @@
 import Foundation
 
 struct Day2022_3: Day {
-	func run(input: String) async {
+	func run(input: String) async -> (Int?, Int?) {
 		let sacks = input
 			.split(whereSeparator: \.isNewline)
 			.map { Array($0) }
@@ -29,8 +29,7 @@ struct Day2022_3: Day {
 			.map(priority(char:))
 			.sum()
 		
-		print(part1)
-		print(part2)
+		return (part1, part2)
 	}
 	
 	func badge(chunk: ArraySlice<[Character]>) -> Character {

@@ -12,7 +12,7 @@ struct Day2020_3: Day {
 		case open, tree
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines: [[Cell]] = input.split(whereSeparator: \.isNewline).map(Array.init).map { chars in
 			return chars.map { char in
 				if char == "." {
@@ -40,10 +40,10 @@ struct Day2020_3: Day {
 				y += ySlope
 			} while y < lines.count
 			
-			print((xSlope, ySlope), trees)
 			sum *= trees
 		}
-		print("Part 2: \(sum)")
+		
+		return (nil, sum)
 	}
 	
 }

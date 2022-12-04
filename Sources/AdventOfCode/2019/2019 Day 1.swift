@@ -18,7 +18,7 @@ struct Day2019_1: Day {
 		return (calculated, ra + rb)
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		var part1 = 0
 		var part2 = 0
 		input.enumerateLines { (lineString, _) in
@@ -27,7 +27,6 @@ struct Day2019_1: Day {
 			part1 += fa
 			part2 += fa + fb
 		}
-		print(part1)
-		print(part2)
+		return (part1, part2)
 	}
 }

@@ -14,33 +14,37 @@ struct Day2020_11: Day {
 		case occupied = "#"
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let layout = input.split(whereSeparator: \.isNewline).map { line in
 			return line.map { Cell.init(rawValue: $0)! }
 		}
 		
 		
 		// Part 1
+		var part1: Int? = nil
 		var current = layout
 		while true {
 			let new = step1(layout: current)
 			if new == current {
-				print(new.map { $0.filter { $0 == .occupied  }.count }.reduce(0, +))
+				part1 = new.map { $0.filter { $0 == .occupied  }.count }.reduce(0, +)
 				break
 			}
 			current = new
 		}
 		
 		// Part 2
+		var part2: Int? = nil
 		current = layout
 		while true {
 			let new = step2(layout: current)
 			if new == current {
-				print(new.map { $0.filter { $0 == .occupied  }.count }.reduce(0, +))
+				part2 = new.map { $0.filter { $0 == .occupied  }.count }.reduce(0, +)
 				break
 			}
 			current = new
 		}
+		
+		return (part1, part2)
 	}
 	
 	func step1(layout: [[Cell]]) -> [[Cell]] {

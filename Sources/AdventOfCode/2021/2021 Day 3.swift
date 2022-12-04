@@ -11,14 +11,13 @@ struct Day2021_3: Day {
 	
 	let len = 12
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines_txt = input.split(whereSeparator: \.isNewline)
 		let lines = lines_txt.map { UInt16($0, radix: 2)! }
 		
 		let chars = UInt8(lines_txt.first!.count)
 		
-		part1(lines: lines, bitCount: chars)
-		part2(lines: lines, bitCount: chars)
+		return (part1(lines: lines, bitCount: chars), part2(lines: lines, bitCount: chars))
 	}
 	
 	func gamma(lines: [UInt16]) -> UInt16 {
@@ -40,14 +39,15 @@ struct Day2021_3: Day {
 		return ~gamma & bitmask
 	}
 	
-	func part1(lines: [UInt16], bitCount: UInt8) {
+	func part1(lines: [UInt16], bitCount: UInt8) -> Int {
 		let gamma = gamma(lines: lines)
 		let epsilon = epsilon(gamma: gamma, bitCount: bitCount)
 		print("gamma: \(gamma); epsilon: \(epsilon)")
-		print(UInt32(gamma) * UInt32(epsilon))
+		
+		return Int(gamma) * Int(epsilon)
 	}
 	
-	func part2(lines: [UInt16], bitCount: UInt8) {
+	func part2(lines: [UInt16], bitCount: UInt8) -> Int {
 		var searchBit = UInt16(pow(2, Double(bitCount - 1)))
 		
 		var oxygenNumbers = lines
@@ -81,6 +81,7 @@ struct Day2021_3: Day {
 		}
 		
 		print("O2: \(oxygenNumbers[0]); CO2: \(co2Numbers[0])")
-		print(UInt32(oxygenNumbers[0]) * UInt32(co2Numbers[0]))
+		
+		return Int(oxygenNumbers[0]) * Int(co2Numbers[0])
 	}
 }

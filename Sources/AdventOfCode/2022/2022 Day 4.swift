@@ -8,13 +8,11 @@
 import Foundation
 
 struct Day2022_4: Day {
-	func run(input: String) async {
-		let ranges = input.split(whereSeparator: \.isNewline)
-			.map { $0.split(separator: ",") }
-			.map { line in
-				let numbers = line.map { $0.split(separator: "-").map(\.integer) }
-				return (numbers[0][0]...numbers[0][1], numbers[1][0]...numbers[1][1])
-			}
+	func run(input: String) async -> (Int?, Int?) {
+		let ranges = input.split(whereSeparator: \.isNewline).map { line in
+			let numbers = line.split(separator: ",").map { $0.split(separator: "-").map(\.integer) }
+			return (numbers[0][0]...numbers[0][1], numbers[1][0]...numbers[1][1])
+		}
 		
 		let withFullSubset = ranges.filter { pair in
 			let r1 = pair.0
@@ -30,7 +28,6 @@ struct Day2022_4: Day {
 			return r1.overlaps(r2)
 		}
 		
-		print(withFullSubset.count)
-		print(withPartialOverlap.count)
+		return (withFullSubset.count, withPartialOverlap.count)
 	}
 }

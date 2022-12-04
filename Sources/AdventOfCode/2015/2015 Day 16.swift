@@ -21,7 +21,7 @@ struct Day2015_16: Day {
 		"perfumes": 1 // <
 	]
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let auntInfo = input
 			.split(whereSeparator: \.isNewline)
 			.map { row in
@@ -63,6 +63,6 @@ struct Day2015_16: Day {
 			return true
 		}.first!
 		
-		print(filtered.offset + 1)
+		return (filtered.offset + 1, nil)
 	}
 }

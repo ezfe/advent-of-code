@@ -99,7 +99,7 @@ struct Day2021_25: Day {
 		}
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		var board = Board(input: input)
 		var i = 0
 		while true {
@@ -113,6 +113,7 @@ struct Day2021_25: Day {
 				board = newBoard
 			}
 		}
-		print(i)
+		
+		return (i, nil)
 	}
 }

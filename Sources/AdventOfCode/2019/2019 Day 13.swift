@@ -14,16 +14,15 @@ struct Day2019_13: Day {
 		let y: Int
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let program = input.filter { !$0.isWhitespace }.split(separator: ",").map { str in
 			return Int(str)!
 		}
 		
-		process(program: program, first: true)
-		process(program: program, first: false)
+		return (process(program: program, first: true), process(program: program, first: false))
 	}
 	
-	func process(program: [Int], first: Bool) {
+	func process(program: [Int], first: Bool) -> Int {
 		let output = BufferedIO()
 		let input = BufferedIO()
 		var computer = IntcodeState(memory: program, input: input, output: output)
@@ -61,9 +60,9 @@ struct Day2019_13: Day {
 		}
 		
 		if first {
-			print(blockCount)
+			return blockCount
 		} else {
-			print(score)
+			return score
 		}
 	}
 }

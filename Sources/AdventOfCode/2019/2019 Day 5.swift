@@ -8,7 +8,7 @@
 import Foundation
 
 struct Day2019_5: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let program = input.filter { !$0.isWhitespace }.split(separator: ",").map { str in
 			return Int(str)!
 		}
@@ -20,5 +20,6 @@ struct Day2019_5: Day {
 		let computer2 = IntcodeState(memory: program,
 											  input: PreloadedStream(stream: [5]))
 		computer2.evaluate()
+		return (nil, nil)
 	}
 }

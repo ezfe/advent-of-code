@@ -8,14 +8,13 @@
 import Foundation
 
 struct Day2020_10: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let adapters = input.split(whereSeparator: \.isNewline).map { UInt8($0)! }.sorted()
 		
-		part1(adapters: adapters)
-		part2(adapters: adapters)
+		return (part1(adapters: adapters), part2(adapters: adapters))
 	}
 	
-	func part2(adapters: [UInt8]) {
+	func part2(adapters: [UInt8]) -> Int {
 		let pattern = [0] + adapters + [adapters.last! + 3]
 		var segments = [[UInt8]]()
 		
@@ -38,7 +37,7 @@ struct Day2020_10: Day {
 							  to: $0.last!,
 							  with: aset)
 		}.reduce(1, *)
-		print(fancy)
+		return fancy
 	}
 	
 	func routes(from: UInt8, to: UInt8, with adapters: Set<UInt8>) -> Int {
@@ -63,7 +62,7 @@ struct Day2020_10: Day {
 		return finished.count
 	}
 	
-	func part1(adapters: [UInt8]) {
+	func part1(adapters: [UInt8]) -> Int {
 		let devices = adapters + [adapters.last! + 3]
 		
 		var previous: UInt8 = 0
@@ -75,6 +74,6 @@ struct Day2020_10: Day {
 			previous = a
 		}
 		
-		print(differences[1]! * differences[3]!)
+		return differences[1]! * differences[3]!
 	}
 }

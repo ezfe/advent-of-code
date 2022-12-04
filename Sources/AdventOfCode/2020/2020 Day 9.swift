@@ -8,14 +8,13 @@
 import Foundation
 
 struct Day2020_9: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline).map(\.integer)
 		
 		let p1 = part1(lines: lines)
-		print(p1)
-		
 		let p2 = part2(lines: lines, part1: p1)
-		print(p2)
+		
+		return (p1, p2)
 	}
 	
 	func part1(lines: [Int]) -> Int {

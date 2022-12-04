@@ -7,23 +7,30 @@
 
 import Foundation
 
-protocol NumericalIdentity {
-	static var additionIdentity: Self {  get }
-	static var multiplicationIdentity: Self {  get }
-}
-
-extension Int: NumericalIdentity {
-	static var additionIdentity: Int { 0 }
-	static var multiplicationIdentity: Int { 1 }
-}
-
-extension Double: NumericalIdentity {
-	static var additionIdentity: Double { 0.0 }
-	static var multiplicationIdentity: Double { 1 }
-}
-
-extension Sequence where Element: NumericalIdentity & AdditiveArithmetic {
+extension Array<Int> {
 	func sum() -> Element {
-		return self.reduce(Element.additionIdentity, +)
+		return self.reduce(0, +)
+	}
+}
+
+extension Collection<UInt64> {
+	func sum() -> Element {
+		return self.reduce(0, +)
+	}
+}
+
+extension Array where Element: FloatingPoint {
+	func sum() -> Element {
+		return self.reduce(0, +)
+	}
+	
+	func average() -> Element {
+		return self.sum() / Element(self.count)
+	}
+	
+	func standardDeviation() -> Element {
+		let mean = self.average()
+		let v = self.reduce(0, { $0 + ($1-mean)*($1-mean) })
+		return sqrt(v / (Element(self.count) - 1))
 	}
 }

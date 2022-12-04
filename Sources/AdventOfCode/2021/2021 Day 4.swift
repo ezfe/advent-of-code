@@ -100,7 +100,7 @@ struct Day2021_4: Day {
 		}
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
 		let numbers = lines[0].split(separator: ",").map { UInt($0)! }
 		let boardCount = Int(Double(lines.count - 1) / 6)
@@ -119,11 +119,10 @@ struct Day2021_4: Day {
 			boards.append(BingoBoard(rows: rows))
 		}
 		
-		part1(numbers: numbers, boards: boards)
-		part2(numbers: numbers, boards: boards)
+		return (part1(numbers: numbers, boards: boards), part2(numbers: numbers, boards: boards))
 	}
 	
-	func part1(numbers: [UInt], boards: [BingoBoard]) {
+	func part1(numbers: [UInt], boards: [BingoBoard]) -> Int? {
 		var boards = boards
 		for pick in numbers {
 			boards = boards.map { $0.pick(number: pick) }
@@ -132,13 +131,13 @@ struct Day2021_4: Day {
 				let sum = winningBoard.unpickedSum()
 				let result = sum * pick
 				print("unpicked sum: \(sum); pick: \(pick)")
-				print(result)
-				break
+				return Int(result)
 			}
 		}
+		return nil
 	}
 	
-	func part2(numbers: [UInt], boards: [BingoBoard]) {
+	func part2(numbers: [UInt], boards: [BingoBoard]) -> Int? {
 		var boards = boards
 		for pick in numbers {
 			boards = boards.map { $0.pick(number: pick) }
@@ -148,10 +147,10 @@ struct Day2021_4: Day {
 				let sum = losingBoard.unpickedSum()
 				let result = sum * pick
 				print("unpicked sum: \(sum); pick: \(pick)")
-				print(result)
-				break
+				return Int(result)
 			}
 			boards = resultingBoards
 		}
+		return nil
 	}
 }

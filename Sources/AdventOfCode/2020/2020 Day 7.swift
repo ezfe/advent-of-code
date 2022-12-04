@@ -8,7 +8,7 @@
 import Foundation
 
 struct Day2020_7: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline).map(String.init)
 		
 		let rules: [Rule] = lines.map { line in
@@ -37,11 +37,10 @@ struct Day2020_7: Day {
 			return Rule(outer: outer, inner: inner)
 		}
 		
-		run1(rules: rules)
-		run2(rules: rules)
+		return (run1(rules: rules), run2(rules: rules))
 	}
 	
-	func run1(rules: [Rule]) {
+	func run1(rules: [Rule]) -> Int {
 		var total = Set(["shiny gold"])
 		var layers = [Set(["shiny gold"])]
 		while true {
@@ -59,11 +58,11 @@ struct Day2020_7: Day {
 			}
 			layers.append(working)
 		}
-		print(Set(layers.dropFirst().reduce([], +)).count)
+		return Set(layers.dropFirst().reduce([], +)).count
 	}
 	
-	func run2(rules: [Rule]) {
-		print(countContents(color: "shiny gold", rules: rules))
+	func run2(rules: [Rule]) -> Int {
+		return countContents(color: "shiny gold", rules: rules)
 	}
 	
 	func countContents(color: String, rules: [Rule]) -> Int {

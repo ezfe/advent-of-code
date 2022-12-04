@@ -8,13 +8,12 @@
 import Foundation
 
 struct Day2020_5: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline).map(String.init)
 		let seatIDs = lines.map(alternative(instructions:))
 		
 		let max = seatIDs.max()!
 		let min = seatIDs.min()!
-		print(max)
 		
 		var mySeats = [Int]()
 		for i in min...max {
@@ -22,7 +21,8 @@ struct Day2020_5: Day {
 				mySeats.append(i)
 			}
 		}
-		print(mySeats.first!)
+		
+		return (max, mySeats.first!)
 	}
 	
 	func alternative(instructions: String) -> Int {

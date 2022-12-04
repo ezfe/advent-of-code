@@ -6,13 +6,12 @@
 //
 
 struct Day2022_1: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let elves = input
 			.split(omittingEmptySubsequences: false, whereSeparator: \.isNewline)
 			.split(whereSeparator: \.isEmpty)
 			.map { $0.map(\.integer).sum() }
 		
-		print(elves.max()!)
-		print(elves.max(count: 3).sum())
+		return (elves.max()!, elves.max(count: 3).sum())
 	}
 }

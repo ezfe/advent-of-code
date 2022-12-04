@@ -9,14 +9,15 @@ import Foundation
 import Atomics
 
 struct Day2020_13: Day {
-	func run(input: String) async {
+	func run(input: String) async -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline)
 		
-		part1(lines: lines)
-		await part2(lines: lines)
+		let part1 = part1(lines: lines)
+//		let part2 = await part2(lines: lines)
+		return (part1, nil)
 	}
 	
-	func part1<T: StringProtocol>(lines: [T]) {
+	func part1<T: StringProtocol>(lines: [T]) -> Int {
 		let earliestDeparture = Int(lines[0])!
 		let routes = lines[1].split(separator: ",").map(\.integer)
 		
@@ -27,16 +28,16 @@ struct Day2020_13: Day {
 			return (untilNextDeparture, route)
 		}.sorted { $0.0 < $1.0 }.first!
 		
-		print(selectedRoute * untilNextDeparture)
+		return selectedRoute * untilNextDeparture
 	}
 	
-	func part2<T: StringProtocol>(lines: [T]) async {
+	func part2<T: StringProtocol>(lines: [T]) async -> UInt {
 		let coreCount = UInt(8)
 		let routes = lines[1].split(separator: ",").map { rid in
 			return Int(rid)
 		}
 		
-		await withTaskGroup(of: UInt.self) { group in
+		return await withTaskGroup(of: UInt.self) { group in
 			for offset in 0..<coreCount {
 				group.addTask {
 					return eval(offset: offset)
@@ -46,8 +47,8 @@ struct Day2020_13: Day {
 			print("Created group with 8 offsets, awaiting...")
 
 			let result = await group.first(where: { $0 > 0 })
-			print(result ?? "No result")
 			group.cancelAll()
+			return result ?? 0
 		}
 		
 		@Sendable

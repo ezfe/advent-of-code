@@ -8,7 +8,7 @@
 import Foundation
 
 struct Day2020_15: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let starters = input
 			.split(whereSeparator: \.isNewline)
 			.first!
@@ -17,6 +17,7 @@ struct Day2020_15: Day {
 		
 		read(starters: starters, to: 2020)
 		read(starters: starters, to: 30000000)
+		return (nil, nil)
 	}
 	
 	func read(starters: [Int], to: Int) {

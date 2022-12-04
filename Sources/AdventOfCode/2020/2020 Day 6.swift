@@ -8,24 +8,22 @@
 import Foundation
 
 struct Day2020_6: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(omittingEmptySubsequences: false, whereSeparator: \.isWhitespace).map(String.init)
 		let groups = lines.split(whereSeparator: { $0.isEmpty })
 		
-		run1(groups: groups)
-		run2(groups: groups)
+		return (run1(groups: groups), run2(groups: groups))
 	}
 	
-	func run1(groups: [Array<String>.SubSequence]) {
+	func run1(groups: [Array<String>.SubSequence]) -> Int {
 		let setted: [Set<Character>] = groups.map {
 			return Set($0.reduce([], +))
 		}
 		
-		let counts = setted.map { $0.count }
-		print(counts.reduce(0, +))
+		return setted.map(\.count).sum()
 	}
 	
-	func run2(groups: [Array<String>.SubSequence]) {
+	func run2(groups: [Array<String>.SubSequence]) -> Int {
 		let setted: [Set<Character>] = groups.map { lines in
 			let sets = lines.map(Set.init)
 			guard var working = sets.first else {
@@ -37,7 +35,6 @@ struct Day2020_6: Day {
 			return working
 		}
 		
-		let counts = setted.map { $0.count }
-		print(counts.reduce(0, +))
+		return setted.map(\.count).sum()
 	}
 }

@@ -12,7 +12,7 @@ struct Day2020_14: Day {
 		case mask(mask: String)
 		case update(position: UInt64, value: UInt64)
 	}
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline).map { line -> Operation in
 			if line.starts(with: "mask = ") {
 				return .mask(mask: String(line.dropFirst(7)))
@@ -29,10 +29,10 @@ struct Day2020_14: Day {
 			}
 		}
 		
-		part2(lines: lines)
+		return (part1(lines: lines), part2(lines: lines))
 	}
 	
-	func part1(lines: [Operation]) {
+	func part1(lines: [Operation]) -> Int {
 		func process(_ value: UInt64, with mask: String) -> UInt64 {
 			/*
 			 mask = 1100XX
@@ -64,10 +64,10 @@ struct Day2020_14: Day {
 			}
 		}
 		
-		print(storage.values.reduce(0, +))
+		return Int(storage.values.sum())
 	}
 	
-	func part2(lines: [Operation]) {
+	func part2(lines: [Operation]) -> Int {
 		func process(_ position: UInt64, with mask: String, at i: Int) -> Character {
 			let mask = Array(mask.reversed())
 			let valueString = String(position, radix: 2)
@@ -127,6 +127,6 @@ struct Day2020_14: Day {
 			}
 		}
 		
-		print(storage.values.reduce(0, +))
+		return Int(storage.values.reduce(0, +))
 	}
 }

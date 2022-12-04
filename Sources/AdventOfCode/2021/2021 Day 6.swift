@@ -8,7 +8,7 @@
 import Foundation
 
 struct Day2021_6: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let agesList = input.split(separator: ",").map(\.integer)
 		var ages = [Int: Int]()
 		for age in agesList {
@@ -21,6 +21,7 @@ struct Day2021_6: Day {
 				print("Day \(i): \(ages.values.reduce(0, +))")
 			}
 		}
+		return (nil, nil)
 	}
 	
 	func pass(ages originalFish: [Int: Int]) -> [Int: Int] {

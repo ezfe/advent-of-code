@@ -14,7 +14,7 @@ struct Day2021_2: Day {
 		case up(Int)
 	}
 	
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let instructions = input
 			.split(whereSeparator: \.isNewline)
 			.map { line -> Instruction in
@@ -34,11 +34,10 @@ struct Day2021_2: Day {
 				}
 			}
 		
-		part1(instructions: instructions)
-		part2(instructions: instructions)
+		return (part1(instructions: instructions), part2(instructions: instructions))
 	}
 	
-	func part1(instructions: [Instruction]) {
+	func part1(instructions: [Instruction]) -> Int {
 		var x = 0
 		var depth = 0
 		for ins in instructions {
@@ -52,10 +51,10 @@ struct Day2021_2: Day {
 			}
 		}
 		
-		print(x * depth)
+		return x * depth
 	}
 	
-	func part2(instructions: [Instruction]) {
+	func part2(instructions: [Instruction]) -> Int {
 		var x = 0
 		var depth = 0
 		var aim = 0
@@ -72,6 +71,6 @@ struct Day2021_2: Day {
 			}
 		}
 		
-		print(x * depth)
+		return x * depth
 	}
 }

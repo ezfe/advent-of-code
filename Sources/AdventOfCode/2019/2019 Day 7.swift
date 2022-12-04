@@ -9,13 +9,12 @@ import Foundation
 import Algorithms
 
 struct Day2019_7: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let program = input.filter { !$0.isWhitespace }.split(separator: ",").map { str in
 			return Int(str)!
 		}
 		
-		print(part1(program: program))
-		print(part2(program: program))
+		return (part1(program: program), part2(program: program))
 	}
 	
 	func part1(program: [Int]) -> Int {

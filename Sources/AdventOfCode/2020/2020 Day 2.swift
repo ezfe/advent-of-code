@@ -8,7 +8,7 @@
 import Foundation
 
 struct Day2020_2: Day {
-	func run(input: String) {
+	func run(input: String) -> (Int?, Int?) {
 		let lines = input.split(whereSeparator: \.isNewline)
 		
 		let passwords = lines.map { l -> PasswordInfo in
@@ -26,8 +26,7 @@ struct Day2020_2: Day {
 									  second: rangeHigh)
 		}
 		
-		part1(passwords: passwords)
-		part2(passwords: passwords)
+		return (part1(passwords: passwords), part2(passwords: passwords))
 	}
 	
 	struct PasswordInfo {
@@ -37,21 +36,19 @@ struct Day2020_2: Day {
 		let second: Int
 	}
 	
-	func part1(passwords: [PasswordInfo]) {
-		let count = passwords.filter { info in
+	func part1(passwords: [PasswordInfo]) -> Int {
+		return passwords.filter { info in
 			let foundCount = info.password.filter { $0 == info.char }.count
 			return foundCount >= info.first && foundCount <= info.second
 		}.count
-		print(count)
 	}
 	
-	func part2(passwords: [PasswordInfo]) {
-		let count = passwords.filter { info in
+	func part2(passwords: [PasswordInfo]) -> Int {
+		return passwords.filter { info in
 			let chars = Array(info.password)
 			let i1pass = chars[info.first - 1] == info.char
 			let i2pass = chars[info.second - 1] == info.char
 			return (i1pass && !i2pass) || (i2pass && !i1pass)
 		}.count
-		print(count)
 	}
 }
