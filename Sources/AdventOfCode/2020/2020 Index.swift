@@ -8,7 +8,7 @@
 import Foundation
 
 struct EntryPoints2020: EntryPoints {
-	let entryPoints: [Int: Day] = [
+	let entryPoints: [Int: any Day] = [
 		1: Day2020_1(),
 		2: Day2020_2(),
 		3: Day2020_3(),

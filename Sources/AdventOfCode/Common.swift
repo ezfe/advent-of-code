@@ -8,9 +8,10 @@
 import Foundation
 
 protocol Day {
-	func run(input: String) async -> (Int?, Int?)
+	associatedtype ReturnType: Equatable
+	func run(input: String) async -> (ReturnType?, ReturnType?)
 }
 
 protocol EntryPoints {
-	var entryPoints: [Int: Day] { get }
+	var entryPoints: [Int: any Day] { get }
 }
