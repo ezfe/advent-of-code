@@ -99,7 +99,7 @@ struct Day2022_7: Day {
 		}
 	}
 	
-	// MARK: - Scrip
+	// MARK: - Script
 	
 	func run(input: String) async -> (Int?, Int?) {
 		let commands = input.split(separator: "$ ").map { commandString in
