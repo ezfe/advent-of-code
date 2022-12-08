@@ -7,7 +7,7 @@
 
 import Foundation
 
-extension Array<Int> {
+extension Collection<Int> {
 	func sum() -> Element {
 		return self.reduce(0, +)
 	}

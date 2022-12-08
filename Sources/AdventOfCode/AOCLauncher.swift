@@ -7,7 +7,7 @@ struct AOCLauncher: AsyncParsableCommand {
 	var year: Int = 2022
 	
 	@Option(name: .shortAndLong, help: "The day to run")
-	var day: Int = 6
+	var day: Int = 7
 	
 	@Option(name: .shortAndLong, help: "The input file path")
 	var filePath: String?
@@ -16,7 +16,7 @@ struct AOCLauncher: AsyncParsableCommand {
 	var aocToken: String?
 	
 	@Option(name: .shortAndLong, help: "Run multiple iterations. Only applies when sourced from AOC website")
-	var iterations: UInt = 10
+	var iterations: UInt = 1
 	
 	static var years: [Int: EntryPoints] = [
 		2015: EntryPoints2015(),
