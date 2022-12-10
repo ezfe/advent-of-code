@@ -7,7 +7,7 @@ struct AOCLauncher: AsyncParsableCommand {
 	var year: Int = 2022
 	
 	@Option(name: .shortAndLong, help: "The day to run")
-	var day: Int = 7
+	var day: Int = 10
 	
 	@Option(name: .shortAndLong, help: "The input file path")
 	var filePath: String?
