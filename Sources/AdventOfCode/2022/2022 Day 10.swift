@@ -50,9 +50,9 @@ struct Day2022_10: Day {
 		
 		// Part 2
 		if (x - 1)...(x + 1) ~= ((cycle - 1) % 40) {
-			print("#", terminator: "")
+			print("█", terminator: "")
 		} else {
-			print(".", terminator: "")
+			print(" ", terminator: "")
 		}
 		if (cycle - 1) % 40 == 39 {
 			print("")
