@@ -12,9 +12,14 @@ struct Day2022_15: Day {
 		let x: Int
 		let y: Int
 		
-		func distance(to other: Coord) -> UInt {
-			let xdiff = UInt(abs(self.x - other.x))
-			let ydiff = UInt(abs(self.y - other.y))
+		init(x: Int, y: Int) {
+			self.x = x
+			self.y = y
+		}
+		
+		func distance(to other: Coord) -> Int {
+			let xdiff = abs(self.x - other.x)
+			let ydiff = abs(self.y - other.y)
 			
 			return xdiff + ydiff
 		}
@@ -23,6 +28,13 @@ struct Day2022_15: Day {
 	struct Reading {
 		let sensor: Coord
 		let beacon: Coord
+		let distance: Int
+		
+		init(sensor: Coord, beacon: Coord) {
+			self.sensor = sensor
+			self.beacon = beacon
+			self.distance = sensor.distance(to: beacon)
+		}
 		
 		func generateEliminatedXCoordinates(row y: Int) -> Set<Int> {
 			let distance = sensor.distance(to: beacon)
@@ -48,20 +60,34 @@ struct Day2022_15: Day {
 								beacon: Coord(x: match.beaconX.integer, y: match.beaconY.integer))
 		}
 		
-		let y = 2000000
-		let results = await concurrentPerform(input: readings) { r in
-			return r.generateEliminatedXCoordinates(row: y)
-		}
-		var cumulative = Set<Int>()
-		for result in results {
-			cumulative = cumulative.union(result)
+		let part1Y = (readings[0].sensor.x > 100) ? 2000000 : 10
+		var part1Cumulative = Set<Int>()
+		for r in readings {
+			part1Cumulative = part1Cumulative.union(r.generateEliminatedXCoordinates(row: part1Y))
 		}
 		
-		let overlappingSensors = readings.filter { $0.sensor.y == y }.map(\.sensor.x)
-		let overlappingBeacons = readings.filter { $0.beacon.y == y }.map(\.beacon.x)
-		cumulative = cumulative.subtracting(overlappingSensors)
-		cumulative = cumulative.subtracting(overlappingBeacons)
-		
-		return (cumulative.count, nil)
+		let part1OverlappingSensors = readings.filter { $0.sensor.y == part1Y }.map(\.sensor.x)
+		let part1OverlappingBeacons = readings.filter { $0.beacon.y == part1Y }.map(\.beacon.x)
+		part1Cumulative = part1Cumulative.subtracting(part1OverlappingSensors)
+		part1Cumulative = part1Cumulative.subtracting(part1OverlappingBeacons)
+
+		let maxV = part1Y * 2
+		var part2: Int?
+		for x in 0...maxV {
+			var y = 0
+			while y <= maxV && part2 == nil {
+				let coord = Coord(x: x, y: y)
+				let sensorInRange = readings.first { $0.sensor.distance(to: coord) <= $0.distance }
+				if let sensorInRange {
+					let xdist = abs(sensorInRange.sensor.x - x)
+					y = sensorInRange.sensor.y + sensorInRange.distance - xdist + 1
+				} else {
+					part2 = (coord.x  * 4000000) + coord.y
+					break
+				}
+			}
+		}
+
+		return (part1Cumulative.count, part2)
 	}
 }
